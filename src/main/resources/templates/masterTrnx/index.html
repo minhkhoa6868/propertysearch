@@ -1,94 +1,430 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Property Search</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
-</head>
-<body>
-    <h1>Property Search</h1>
-    <form action="/search" method="post" class="search-form">
-        <!--    Street Name multiselection    -->
-        <div class="form-group">
-            <label>Street Name:</label>
-            <select id="stNames"
-                    name="stNames" placeholder="All Street Names"
-                    multiple>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Property Search</h1>
 
-                <option th:each="opt : ${streetNames}"
-                        th:value="${opt}"
-                        th:text="${opt}">
-                </option>
+      <div class="rule"></div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-header-label">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="4" y1="6" x2="20" y2="6" />
+              <line x1="8" y1="12" x2="16" y2="12" />
+              <line x1="10" y1="18" x2="14" y2="18" />
+            </svg>
+            Filters
+          </span>
+        </div>
+
+        <div class="search-form">
+          <!-- Street Name -->
+          <div class="form-group">
+            <label>
+              <span class="label-dot"></span>
+              Street Name
+            </label>
+            <select
+              id="stNames"
+              name="stNames"
+              placeholder="All street names"
+              multiple
+            >
+              <option
+                th:each="opt : ${streetNames}"
+                th:value="${opt}"
+                th:text="${opt}"
+                th:selected="${selectedStreetNames != null and selectedStreetNames.contains(opt)}"
+              ></option>
             </select>
-            <p class="error"></p>
-        </div>
+          </div>
 
-        <!--    nPostal Code    -->
-        <div class="form-group">
-            <label>Postal Code:</label>
-            <input type="text" name="nPostal" id="nPostal" class="form-input" placeholder="Postal Code" />
-            <p class="error"></p>
-        </div>
+          <!-- Postal Code -->
+          <div class="form-group">
+            <label>
+              <span class="label-dot"></span>
+              Postal Code
+            </label>
+            <input
+              type="text"
+              name="nPostal"
+              id="nPostal"
+              class="form-input"
+              placeholder="e.g. 310001"
+              th:value="${nPostalValue}"
+            />
+          </div>
 
-        <!--   Floor Area Range     -->
-        <div class="form-group">
-            <label>Floor Area Range:</label>
-            <div class="range-container">
-                <div class="floor-area-input">
-                    <input type="number"
-                           name="flrAreaMin"
-                           id="flrAreaMin"
-                           placeholder="Min"
-                           class="form-input"
-                           min="0"
-                    />
-                    <p class="error"></p>
-                </div>
-                <span class="range-separator">to</span>
-                <div class="floor-area-input">
-                    <input type="number"
-                           name="flrAreaMax"
-                           id="flrAreaMax"
-                           placeholder="Max"
-                           class="form-input"
-                           min="0"
-                    />
-                    <p class="error"></p>
-                </div>
+          <!-- Floor Area -->
+          <div class="form-group">
+            <label>
+              <span class="label-dot"></span>
+              Floor Area
+            </label>
+            <div class="range-row">
+              <input
+                type="number"
+                name="flrAreaMin"
+                id="flrAreaMin"
+                class="form-input"
+                placeholder="Min"
+                min="0"
+                th:value="${flrAreaMinValue}"
+              />
+              <span class="range-sep">—</span>
+              <input
+                type="number"
+                name="flrAreaMax"
+                id="flrAreaMax"
+                class="form-input"
+                placeholder="Max"
+                min="0"
+                th:value="${flrAreaMaxValue}"
+              />
             </div>
-        </div>
+          </div>
 
-        <!--    Contract Date Range    -->
-        <div class="form-group">
-            <label>Contract Date Range:</label>
-            <div class="range-container">
-                <input type="date"
-                       name="contDateFrom"
-                       id="contDateFrom"
-                       class="form-input"
-                />
-                <span class="range-separator">to</span>
-                <input type="date"
-                       name="contDateTo"
-                       id="contDateTo"
-                       class="form-input"
-                />
+          <!-- Contract Date Range -->
+          <div class="form-group">
+            <label>
+              <span class="label-dot"></span>
+              Contract Date Range
+            </label>
+            <div class="range-row">
+              <input
+                type="date"
+                name="contDateFrom"
+                id="contDateFrom"
+                class="form-input"
+                th:value="${contDateFromValue}"
+              />
+              <span class="range-sep">—</span>
+              <input
+                type="date"
+                name="contDateTo"
+                id="contDateTo"
+                class="form-input"
+                th:value="${contDateToValue}"
+              />
             </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-actions">
+            <button type="button" class="search-btn" onclick="applyFilters()">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              Search Properties
+            </button>
+            <button type="button" class="clear-btn" onclick="clearFilters()">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+              Clear Filters
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <input
+        type="hidden"
+        id="sortFieldInput"
+        name="sortField"
+        th:value="${sortField}"
+      />
+      <input
+        type="hidden"
+        id="sortDirectionInput"
+        name="sortDirection"
+        th:value="${sortDirection}"
+      />
+
+      <div class="results-card">
+        <div class="results-header">
+          <span class="results-label">
+            Results
+            <span class="results-count" th:text="${result.total}"></span>
+          </span>
+
+          <div class="export-btn">
+            <select
+              id="pageSizeSelect"
+              class="page-size-select"
+              name="limit"
+              onchange="handlePageSizeChange(this)"
+            >
+              <option value="20" th:selected="${(limit ?: 50) == 20}">
+                20
+              </option>
+              <option value="50" th:selected="${(limit ?: 50) == 50}">
+                50
+              </option>
+              <option value="100" th:selected="${(limit ?: 50) == 100}">
+                100
+              </option>
+            </select>
+
+            <button class="export-btn-csv">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                <path
+                  d="M128 64C92.7 64 64 92.7 64 128L64 512C64 547.3 92.7 576 128 576L208 576L208 464C208 428.7 236.7 400 272 400L448 400L448 234.5C448 217.5 441.3 201.2 429.3 189.2L322.7 82.7C310.7 70.7 294.5 64 277.5 64L128 64zM389.5 240L296 240C282.7 240 272 229.3 272 216L272 122.5L389.5 240zM296 444C271.7 444 252 463.7 252 488L252 568C252 592.3 271.7 612 296 612L312 612C336.3 612 356 592.3 356 568L356 560C356 549 347 540 336 540C325 540 316 549 316 560L316 568C316 570.2 314.2 572 312 572L296 572C293.8 572 292 570.2 292 568L292 488C292 485.8 293.8 484 296 484L312 484C314.2 484 316 485.8 316 488L316 496C316 507 325 516 336 516C347 516 356 507 356 496L356 488C356 463.7 336.3 444 312 444L296 444zM432 444C403.3 444 380 467.3 380 496C380 524.7 403.3 548 432 548C438.6 548 444 553.4 444 560C444 566.6 438.6 572 432 572L400 572C389 572 380 581 380 592C380 603 389 612 400 612L432 612C460.7 612 484 588.7 484 560C484 531.3 460.7 508 432 508C425.4 508 420 502.6 420 496C420 489.4 425.4 484 432 484L456 484C467 484 476 475 476 464C476 453 467 444 456 444L432 444zM528 444C517 444 508 453 508 464L508 495.6C508 531.1 518.5 565.9 538.2 595.4L543.3 603.1C547 608.7 553.3 612 559.9 612C566.5 612 572.8 608.7 576.5 603.1L581.6 595.4C601.3 565.8 611.8 531.1 611.8 495.6L611.8 464C611.8 453 602.8 444 591.8 444C580.8 444 571.8 453 571.8 464L571.8 495.6C571.8 515.2 567.7 534.5 559.8 552.3C551.9 534.5 547.8 515.2 547.8 495.6L547.8 464C547.8 453 538.8 444 527.8 444z"
+                />
+              </svg>
+              Export CSV
+            </button>
+            <button class="export-btn-pdf">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                <path
+                  d="M128 64C92.7 64 64 92.7 64 128L64 512C64 547.3 92.7 576 128 576L208 576L208 464C208 428.7 236.7 400 272 400L448 400L448 234.5C448 217.5 441.3 201.2 429.3 189.2L322.7 82.7C310.7 70.7 294.5 64 277.5 64L128 64zM389.5 240L296 240C282.7 240 272 229.3 272 216L272 122.5L389.5 240zM272 444C261 444 252 453 252 464L252 592C252 603 261 612 272 612C283 612 292 603 292 592L292 564L304 564C337.1 564 364 537.1 364 504C364 470.9 337.1 444 304 444L272 444zM304 524L292 524L292 484L304 484C315 484 324 493 324 504C324 515 315 524 304 524zM400 444C389 444 380 453 380 464L380 592C380 603 389 612 400 612L432 612C460.7 612 484 588.7 484 560L484 496C484 467.3 460.7 444 432 444L400 444zM420 572L420 484L432 484C438.6 484 444 489.4 444 496L444 560C444 566.6 438.6 572 432 572L420 572zM508 464L508 592C508 603 517 612 528 612C539 612 548 603 548 592L548 548L576 548C587 548 596 539 596 528C596 517 587 508 576 508L548 508L548 484L576 484C587 484 596 475 596 464C596 453 587 444 576 444L528 444C517 444 508 453 508 464z"
+                />
+              </svg>
+              Export PDF
+            </button>
+          </div>
         </div>
 
-        <button type="submit" class="search-btn">Search</button>
-    </form>
+        <div class="table-scroll">
+          <!-- Grid -->
+          <form action="/" method="get">
+            <table class="grid">
+              <thead>
+                <tr>
+                  <!-- checkbox -->
+                  <th>
+                    <input type="checkbox" id="selectAll" />
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Project Name
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('projName', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>Address</th>
+                  <th>
+                    <div class="col-header">
+                      House / Block No.
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('hseNum', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Street Name
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('stName', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>Unit No.</th>
+                  <th>
+                    <div class="col-header">
+                      District
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('district', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Planning Area
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('planningArea', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Postal Code
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('nPostal', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Property Type
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('propertyType', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Area Type
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('areaType', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Floor Area (sqm)
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('flrArea', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Floor Area (sqft)
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('flrSf', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Transacted Price ($)
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('consider', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Price PSM ($/sqm)
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('psm', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Price PSF ($/sqft)
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('psf', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Sale Type
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('saleType', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Contract Date
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('contDate', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Tenure
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('tenure', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="col-header">
+                      Completion Date
+                      <!-- button for sorting -->
+                      <div
+                        th:replace="~{fragments/sortBtn:: primaryButton('completionDate', ${sortField}, ${sortDirection})}"
+                      ></div>
+                    </div>
+                  </th>
+                  <th>Purchaser Addr. Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="prop : ${result.items}">
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="selectedProperties"
+                      th:value="${prop.recNum}"
+                    />
+                  </td>
+                  <td th:text="${prop.projName}"></td>
+                  <td th:text="${prop.address}"></td>
+                  <td th:text="${prop.hseNum}"></td>
+                  <td th:text="${prop.stName}"></td>
+                  <td th:text="${prop.unitNum}"></td>
+                  <td th:text="${prop.district}"></td>
+                  <td th:text="${prop.planningArea}"></td>
+                  <td th:text="${prop.nPostal}"></td>
+                  <td th:text="${prop.propertyType}"></td>
+                  <td th:text="${prop.areaType}"></td>
+                  <td th:text="${prop.flrArea}" class="num"></td>
+                  <td th:text="${prop.flrSf}" class="num"></td>
+                  <td th:text="${prop.consider}" class="num"></td>
+                  <td th:text="${prop.psm}" class="num"></td>
+                  <td th:text="${prop.psf}" class="num"></td>
+                  <td th:text="${prop.saleType}"></td>
+                  <td
+                    th:text="${#temporals.format(prop.contDate, 'dd/MM/yyyy')}"
+                  ></td>
+                  <td th:text="${prop.tenure}"></td>
+                  <td th:text="${prop.completionDate}"></td>
+                  <td th:text="${prop.purAddType}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            new TomSelect("#stNames", {
-                plugins: ['remove_button'],
-                create: false,
-                maxItems: null
-            });
-        });
-    </script>
-</body>
+    <script src="/js/masterTrnx.js"></script>
+  </body>
 </html>

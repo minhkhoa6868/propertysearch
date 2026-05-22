@@ -3,7 +3,6 @@ package com.propertysearch.masterTrnx.service;
 import com.propertysearch.core.dto.PaginationRequestDto;
 import com.propertysearch.core.dto.PaginationResponseDto;
 import com.propertysearch.core.util.PaginationUtils;
-import com.propertysearch.masterTrnx.domain.entity.MasterTrnxEntity;
 import com.propertysearch.masterTrnx.domain.repository.MasterTrnxRepository;
 import com.propertysearch.masterTrnx.dto.MasterTrnxDto;
 import com.propertysearch.masterTrnx.mapper.MasterTrnxMapper;
@@ -28,22 +27,40 @@ public class MasterTrnxService {
 
     @Transactional(readOnly = true)
     public PaginationResponseDto<MasterTrnxDto> search(PaginationRequestDto request) {
-        Pageable pageable = PaginationUtils.createPageable(request, "recNum");
+        Pageable pageable = PaginationUtils.createPageable(request, "contDate");
         // street name
         List<String> stNames = getFilterList(request.getFilters(), "stNames");
         // n_postal code
-        String nPostal = request.getFilters().getOrDefault("nPostal", "").toString();
+        Object nPostalObj = request.getFilters().get("nPostal");
+
+        String nPostal =
+            nPostalObj != null
+                ? nPostalObj.toString()
+                : "";
         // floor area min and max
-        String flrAreaMin = request.getFilters().getOrDefault("flrAreaMin", "").toString();
+        Object flrAreaMinObj = request.getFilters().get("flrAreaMin");
+
+        String flrAreaMin =
+            flrAreaMinObj != null
+                ? flrAreaMinObj.toString()
+                : "";
+
         Double flrAreaMinValue = flrAreaMin.isEmpty() ? null : Double.valueOf(flrAreaMin);
-        String flrAreaMax = request.getFilters().getOrDefault("flrAreaMax", "").toString();
+
+        Object flrAreaMaxObj = request.getFilters().get("flrAreaMax");
+
+        String flrAreaMax =
+            flrAreaMaxObj != null
+                ? flrAreaMaxObj.toString()
+                : "";
+
         Double flrAreaMaxValue = flrAreaMax.isEmpty() ? null : Double.valueOf(flrAreaMax);
         // contract date from and to
         LocalDate contDateFrom = parseLocalDate(request.getFilters(), "contDateFrom");
         LocalDate contDateTo = parseLocalDate(request.getFilters(), "contDateTo");
 
-        Page<MasterTrnxEntity> masterTrnxEntities = masterTrnxRepository.searchByFilters(stNames, nPostal, flrAreaMinValue, flrAreaMaxValue, contDateFrom, contDateTo, pageable);
-        return PaginationUtils.buildResponse(request, masterTrnxEntities, masterTrnxMapper::toDto);
+        Page<MasterTrnxDto> page = masterTrnxRepository.searchByFilters(stNames, nPostal, flrAreaMinValue, flrAreaMaxValue, contDateFrom, contDateTo, pageable);
+        return PaginationUtils.buildResponse(request, page, item -> item);
     }
 
     @Transactional(readOnly = true)

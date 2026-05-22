@@ -21,16 +21,16 @@ public class MasterTrnxMapper {
         dto.setStName(entity.getStName());
         dto.setUnitNum(entity.getUnitNum());
 
-        dto.setArea(entity.getArea());
+        // dto.setArea(entity.getArea());
         dto.setFlrArea(entity.getFlrArea());
         dto.setFlrSf(entity.getFlrSf());
-        dto.setFlrRate(entity.getFlrRate());
-        dto.setFlrRaSf(entity.getFlrRaSf());
+        // dto.setFlrRate(entity.getFlrRate());
+        // dto.setFlrRaSf(entity.getFlrRaSf());
 
-        dto.setLandArea(entity.getLandArea());
-        dto.setLandSf(entity.getLandSf());
-        dto.setLandRate(entity.getLandRate());
-        dto.setLandRaSf(entity.getLandRaSf());
+        // dto.setLandArea(entity.getLandArea());
+        // dto.setLandSf(entity.getLandSf());
+        // dto.setLandRate(entity.getLandRate());
+        // dto.setLandRaSf(entity.getLandRaSf());
 
         dto.setAreaType(entity.getAreaType());
 
@@ -43,7 +43,7 @@ public class MasterTrnxMapper {
 
         dto.setPropertyType(entity.getPropertyType());
         dto.setTenure(entity.getTenure());
-        dto.setTitle(entity.getTitle());
+        // dto.setTitle(entity.getTitle());
 
         dto.setCompletionDate(entity.getCompletionDate());
 
@@ -52,14 +52,14 @@ public class MasterTrnxMapper {
         dto.setPurAddType(entity.getPurAddType());
 
         dto.setDistrict(entity.getDistrict());
-        dto.setSector(entity.getSector());
+        // dto.setSector(entity.getSector());
 
         dto.setNPostal(entity.getNPostal());
 
-        dto.setPlanningRegion(entity.getPlanningRegion());
+        // dto.setPlanningRegion(entity.getPlanningRegion());
         dto.setPlanningArea(entity.getPlanningArea());
 
-        dto.setPostal(entity.getPostal());
+        // dto.setPostal(entity.getPostal());
 
         return dto;
     }

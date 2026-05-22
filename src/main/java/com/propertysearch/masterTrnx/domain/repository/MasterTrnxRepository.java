@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.propertysearch.masterTrnx.domain.entity.MasterTrnxEntity;
+import com.propertysearch.masterTrnx.dto.MasterTrnxDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +17,11 @@ import java.util.List;
 public interface MasterTrnxRepository extends JpaRepository<MasterTrnxEntity, Long> {
 
     @Query("""
-        SELECT m
+        SELECT new com.propertysearch.masterTrnx.dto.MasterTrnxDto(
+            m.recNum, m.projName, m.address, m.hseNum, m.stName, m.unitNum, m.flrArea, m.flrSf, m.areaType, m.consider,
+            m.psm, m.psf, m.contDate, m.propertyType, m.tenure, m.completionDate, m.saleType, m.purAddType, m.district,
+            m.nPostal, m.planningArea
+        )
         FROM MasterTrnxEntity m
         WHERE
             (:#{#stNames == null || #stNames.isEmpty()} = true OR m.stName IN (:stNames))
@@ -26,7 +31,7 @@ public interface MasterTrnxRepository extends JpaRepository<MasterTrnxEntity, Lo
             AND (:contDateFrom IS NULL OR CAST(m.contDate AS LocalDate) >= :contDateFrom)
             AND (:contDateTo IS NULL OR CAST(m.contDate AS LocalDate) <= :contDateTo)
         """)
-    Page<MasterTrnxEntity> searchByFilters(
+    Page<MasterTrnxDto> searchByFilters(
             @Param("stNames") List<String> stNames,
             @Param("nPostal") String nPostal,
             @Param("flrAreaMin") Double flrAreaMin,

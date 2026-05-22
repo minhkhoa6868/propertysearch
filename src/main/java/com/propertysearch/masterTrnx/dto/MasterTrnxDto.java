@@ -1,11 +1,16 @@
 package com.propertysearch.masterTrnx.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MasterTrnxDto {
     private Long recNum;
     private String projName;
@@ -13,15 +18,15 @@ public class MasterTrnxDto {
     private String hseNum;
     private String stName;
     private String unitNum;
-    private Double area;
+    // private Double area;
     private Double flrArea;
     private Double flrSf;
-    private Double flrRate;
-    private Double flrRaSf;
-    private Double landArea;
-    private Double landSf;
-    private Double landRate;
-    private Double landRaSf;
+    // private Double flrRate;
+    // private Double flrRaSf;
+    // private Double landArea;
+    // private Double landSf;
+    // private Double landRate;
+    // private Double landRaSf;
     private String areaType;
     private Double consider;
     private Double psm;
@@ -29,15 +34,15 @@ public class MasterTrnxDto {
     private LocalDateTime contDate;
     private String propertyType;
     private String tenure;
-    private String title;
+    // private String title;
     private String completionDate;
     private String saleType;
     private String purAddType;
     private String district;
-    private String sector;
+    // private String sector;
     @JsonProperty("nPostal")
     private String nPostal;
-    private String planningRegion;
+    // private String planningRegion;
     private String planningArea;
-    private String postal;
+    // private String postal;
 }
