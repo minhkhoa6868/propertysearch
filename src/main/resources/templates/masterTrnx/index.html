@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Property Search</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+</head>
+<body>
+    <h1>Property Search</h1>
+    <form action="/search" method="post" class="search-form">
+        <!--    Street Name multiselection    -->
+        <div class="form-group">
+            <label>Street Name:</label>
+            <select id="stNames"
+                    name="stNames" placeholder="All Street Names"
+                    multiple>
+
+                <option th:each="opt : ${streetNames}"
+                        th:value="${opt}"
+                        th:text="${opt}">
+                </option>
+            </select>
+            <p class="error"></p>
+        </div>
+
+        <!--    nPostal Code    -->
+        <div class="form-group">
+            <label>Postal Code:</label>
+            <input type="text" name="nPostal" id="nPostal" class="form-input" placeholder="Postal Code" />
+            <p class="error"></p>
+        </div>
+
+        <!--   Floor Area Range     -->
+        <div class="form-group">
+            <label>Floor Area Range:</label>
+            <div class="range-container">
+                <div class="floor-area-input">
+                    <input type="number"
+                           name="flrAreaMin"
+                           id="flrAreaMin"
+                           placeholder="Min"
+                           class="form-input"
+                           min="0"
+                    />
+                    <p class="error"></p>
+                </div>
+                <span class="range-separator">to</span>
+                <div class="floor-area-input">
+                    <input type="number"
+                           name="flrAreaMax"
+                           id="flrAreaMax"
+                           placeholder="Max"
+                           class="form-input"
+                           min="0"
+                    />
+                    <p class="error"></p>
+                </div>
+            </div>
+        </div>
+
+        <!--    Contract Date Range    -->
+        <div class="form-group">
+            <label>Contract Date Range:</label>
+            <div class="range-container">
+                <input type="date"
+                       name="contDateFrom"
+                       id="contDateFrom"
+                       class="form-input"
+                />
+                <span class="range-separator">to</span>
+                <input type="date"
+                       name="contDateTo"
+                       id="contDateTo"
+                       class="form-input"
+                />
+            </div>
+        </div>
+
+        <button type="submit" class="search-btn">Search</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            new TomSelect("#stNames", {
+                plugins: ['remove_button'],
+                create: false,
+                maxItems: null
+            });
+        });
+    </script>
+</body>
+</html>
