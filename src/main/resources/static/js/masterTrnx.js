@@ -1,9 +1,40 @@
+// Initialize TomSelect for multi-select dropdown
 document.addEventListener("DOMContentLoaded", function () {
   new TomSelect("#stNames", {
     plugins: ["remove_button"],
     create: false,
     maxItems: null,
   });
+});
+
+// select checkbox logic
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('input[name="selectedProperties"]').forEach(checkbox => {
+        checkbox.addEventListener("change", function () {
+            const row = this.closest("tr");
+            if (this.checked) {
+                row.classList.add("active");
+            } else {
+                row.classList.remove("active");
+            }
+        });
+    });
+
+    // select all checkbox
+    const selectAll = document.getElementById("selectAll");
+    if (selectAll) {
+        selectAll.addEventListener("change", function () {
+            document.querySelectorAll('input[name="selectedProperties"]').forEach(checkbox => {
+                checkbox.checked = this.checked;
+                const row = checkbox.closest("tr");
+                if (this.checked) {
+                    row.classList.add("active");
+                } else {
+                    row.classList.remove("active");
+                }
+            });
+        });
+    }
 });
 
 function applyFilters() {
@@ -123,4 +154,20 @@ function handlePageSizeChange(select) {
   param.set("offset", "0");
 
   window.location.href = "/?" + param.toString();
+}
+
+function goToPage(pageOrElement) {
+    const params = new URLSearchParams(window.location.search);
+    const limit = parseInt(params.get("limit") || "50");
+
+    let page;
+    if (typeof pageOrElement === 'number') {
+        page = pageOrElement;
+    } else {
+        page = parseInt(pageOrElement.getAttribute("data-page"));
+    }
+
+    params.set("limit", limit);
+    params.set("offset", (page - 1) * limit);
+    window.location.href = "/?" + params.toString();
 }

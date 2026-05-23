@@ -1,6 +1,8 @@
 package com.propertysearch.masterTrnx.controller;
 
 import com.propertysearch.core.dto.PaginationRequestDto;
+import com.propertysearch.core.dto.PaginationResponseDto;
+import com.propertysearch.masterTrnx.dto.MasterTrnxDto;
 import com.propertysearch.masterTrnx.service.MasterTrnxService;
 
 import lombok.RequiredArgsConstructor;
@@ -47,12 +49,11 @@ public class MasterTrnxController {
         paginationRequest.setSortField(sortField);
         paginationRequest.setSortDirection(sortDirection);
 
-        model.addAttribute("result", masterTrnxService.search(paginationRequest));
+        PaginationResponseDto<MasterTrnxDto> result = masterTrnxService.search(paginationRequest);
+        model.addAttribute("result", result);
 
-        model.addAttribute(
-                "streetNames",
-                masterTrnxService.getDistinctStreetNames()
-        );
+        List<String> distinctStNames = masterTrnxService.getDistinctStreetNames();
+        model.addAttribute("streetNames", distinctStNames);
 
         // keep the value in the search form
         model.addAttribute("selectedStreetNames", stNames);
@@ -65,6 +66,16 @@ public class MasterTrnxController {
         model.addAttribute("limit", limit);
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDirection", sortDirection);
+
+        int totalPages = result.getTotalPages();
+        int currentPage = offset / limit + 1;
+        int pageStart = totalPages > 0 ? Math.max(1, currentPage - 2) : 1;
+        int pageEnd = totalPages > 0 ? Math.min(totalPages, currentPage + 2) : 1;
+
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("pageStart", pageStart);
+        model.addAttribute("pageEnd", pageEnd);
 
         return "masterTrnx/index";
     }

@@ -1,0 +1,65 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div 
+        class="pagination"
+        th:fragment="pagination(currentPage, totalPages, pageStart, pageEnd)"
+    >
+      <!-- First -->
+      <a
+        class="page-btn"
+        th:classappend="${currentPage == 1 ? 'disabled' : ''}"
+        th:if="${currentPage > 1}"
+        onclick="goToPage(1)"
+      >
+        First
+      </a>
+
+      <!-- Prev -->
+      <a
+        class="page-btn"
+        th:classappend="${currentPage == 1 ? 'disabled' : ''}"
+        th:data-page="${currentPage - 1}"
+        th:if="${currentPage > 1}"
+        onclick="goToPage(this)"
+      >
+        Prev
+      </a>
+
+      <!-- Page numbers — show 5 pages around current -->
+      <th:block th:if="${pageStart != null and pageEnd != null}">
+        <a
+          class="page-btn"
+          th:each="i : ${#numbers.sequence(pageStart, pageEnd)}"
+          th:classappend="${i == currentPage ? 'active' : ''}"
+          th:data-page="${i}"
+          th:text="${i}"
+          onclick="goToPage(this)"
+        >
+        </a>
+      </th:block>
+
+      <!-- Next -->
+      <a
+        class="page-btn"
+        th:classappend="${currentPage == totalPages ? 'disabled' : ''}"
+        th:data-page="${currentPage + 1}"
+        th:if="${currentPage < totalPages}"
+        onclick="goToPage(this)"
+      >
+        Next
+      </a>
+
+      <!-- Last -->
+      <a
+        class="page-btn"
+        th:classappend="${currentPage == totalPages ? 'disabled' : ''}"
+        th:data-page="${totalPages}"
+        th:if="${currentPage < totalPages}"
+        onclick="goToPage(this)"
+      >
+        Last
+      </a>
+    </div>
+  </body>
+</html>

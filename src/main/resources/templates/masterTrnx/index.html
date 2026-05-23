@@ -218,210 +218,215 @@
           </div>
         </div>
 
+        <!-- Pagination -->
+        <div th:replace="~{fragments/pagination:: pagination(${currentPage}, ${totalPages}, ${pageStart}, ${pageEnd})}"></div>
+
         <div class="table-scroll">
           <!-- Grid -->
-          <form action="/" method="get">
-            <table class="grid">
-              <thead>
-                <tr>
-                  <!-- checkbox -->
-                  <th>
-                    <input type="checkbox" id="selectAll" />
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Project Name
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('projName', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>Address</th>
-                  <th>
-                    <div class="col-header">
-                      House / Block No.
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('hseNum', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Street Name
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('stName', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>Unit No.</th>
-                  <th>
-                    <div class="col-header">
-                      District
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('district', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Planning Area
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('planningArea', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Postal Code
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('nPostal', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Property Type
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('propertyType', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Area Type
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('areaType', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Floor Area (sqm)
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('flrArea', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Floor Area (sqft)
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('flrSf', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Transacted Price ($)
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('consider', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Price PSM ($/sqm)
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('psm', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Price PSF ($/sqft)
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('psf', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Sale Type
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('saleType', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Contract Date
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('contDate', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Tenure
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('tenure', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>
-                    <div class="col-header">
-                      Completion Date
-                      <!-- button for sorting -->
-                      <div
-                        th:replace="~{fragments/sortBtn:: primaryButton('completionDate', ${sortField}, ${sortDirection})}"
-                      ></div>
-                    </div>
-                  </th>
-                  <th>Purchaser Addr. Type</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each="prop : ${result.items}">
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="selectedProperties"
-                      th:value="${prop.recNum}"
-                    />
-                  </td>
-                  <td th:text="${prop.projName}"></td>
-                  <td th:text="${prop.address}"></td>
-                  <td th:text="${prop.hseNum}"></td>
-                  <td th:text="${prop.stName}"></td>
-                  <td th:text="${prop.unitNum}"></td>
-                  <td th:text="${prop.district}"></td>
-                  <td th:text="${prop.planningArea}"></td>
-                  <td th:text="${prop.nPostal}"></td>
-                  <td th:text="${prop.propertyType}"></td>
-                  <td th:text="${prop.areaType}"></td>
-                  <td th:text="${prop.flrArea}" class="num"></td>
-                  <td th:text="${prop.flrSf}" class="num"></td>
-                  <td th:text="${prop.consider}" class="num"></td>
-                  <td th:text="${prop.psm}" class="num"></td>
-                  <td th:text="${prop.psf}" class="num"></td>
-                  <td th:text="${prop.saleType}"></td>
-                  <td
-                    th:text="${#temporals.format(prop.contDate, 'dd/MM/yyyy')}"
-                  ></td>
-                  <td th:text="${prop.tenure}"></td>
-                  <td th:text="${prop.completionDate}"></td>
-                  <td th:text="${prop.purAddType}"></td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
+          <table class="grid">
+            <thead>
+              <tr>
+                <!-- checkbox -->
+                <th>
+                  <input type="checkbox" id="selectAll" />
+                </th>
+                <th>
+                  <div class="col-header">
+                    Project Name
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('projName', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>Address</th>
+                <th>
+                  <div class="col-header">
+                    House / Block No.
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('hseNum', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Street Name
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('stName', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>Unit No.</th>
+                <th>
+                  <div class="col-header">
+                    District
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('district', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Planning Area
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('planningArea', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Postal Code
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('nPostal', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Property Type
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('propertyType', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Area Type
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('areaType', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Floor Area (sqm)
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('flrArea', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Floor Area (sqft)
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('flrSf', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Transacted Price ($)
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('consider', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Price PSM ($/sqm)
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('psm', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Price PSF ($/sqft)
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('psf', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Sale Type
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('saleType', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Contract Date
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('contDate', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Tenure
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('tenure', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>
+                  <div class="col-header">
+                    Completion Date
+                    <!-- button for sorting -->
+                    <div
+                      th:replace="~{fragments/sortBtn:: primaryButton('completionDate', ${sortField}, ${sortDirection})}"
+                    ></div>
+                  </div>
+                </th>
+                <th>Purchaser Addr. Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="prop : ${result.items}">
+                <td>
+                  <input
+                    type="checkbox"
+                    name="selectedProperties"
+                    class="row-checkbox"
+                    th:value="${prop.recNum}"
+                  />
+                </td>
+                <td th:text="${prop.projName}"></td>
+                <td th:text="${prop.address}"></td>
+                <td th:text="${prop.hseNum}"></td>
+                <td th:text="${prop.stName}"></td>
+                <td th:text="${prop.unitNum}"></td>
+                <td th:text="${prop.district}"></td>
+                <td th:text="${prop.planningArea}"></td>
+                <td th:text="${prop.nPostal}"></td>
+                <td th:text="${prop.propertyType}"></td>
+                <td th:text="${prop.areaType}"></td>
+                <td th:text="${prop.flrArea}" class="num"></td>
+                <td th:text="${prop.flrSf}" class="num"></td>
+                <td th:text="${prop.consider}" class="num"></td>
+                <td th:text="${prop.psm}" class="num"></td>
+                <td th:text="${prop.psf}" class="num"></td>
+                <td th:text="${prop.saleType}"></td>
+                <td
+                  th:text="${#temporals.format(prop.contDate, 'dd/MM/yyyy')}"
+                ></td>
+                <td th:text="${prop.tenure}"></td>
+                <td th:text="${prop.completionDate}"></td>
+                <td th:text="${prop.purAddType}"></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+
+        <!-- Pagination -->
+        <div th:replace="~{fragments/pagination:: pagination(${currentPage}, ${totalPages}, ${pageStart}, ${pageEnd})}"></div>
       </div>
     </div>
 

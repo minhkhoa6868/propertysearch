@@ -5,7 +5,6 @@ import com.propertysearch.core.dto.PaginationResponseDto;
 import com.propertysearch.core.util.PaginationUtils;
 import com.propertysearch.masterTrnx.domain.repository.MasterTrnxRepository;
 import com.propertysearch.masterTrnx.dto.MasterTrnxDto;
-import com.propertysearch.masterTrnx.mapper.MasterTrnxMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +22,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MasterTrnxService {
     private final MasterTrnxRepository masterTrnxRepository;
-    private final MasterTrnxMapper masterTrnxMapper;
 
     @Transactional(readOnly = true)
     public PaginationResponseDto<MasterTrnxDto> search(PaginationRequestDto request) {

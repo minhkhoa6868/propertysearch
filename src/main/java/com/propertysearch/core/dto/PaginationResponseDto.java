@@ -14,5 +14,6 @@ public class PaginationResponseDto<T> {
     private int offset;
     private int limit;
     private long total;
+    private int totalPages;
     private List<T> items;
 }

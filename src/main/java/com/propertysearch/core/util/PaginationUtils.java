@@ -42,6 +42,7 @@ public class PaginationUtils {
                 .offset(request.getOffset())
                 .limit(request.getLimit())
                 .total(items != null ? items.size() : 0)
+                .totalPages(page.getTotalPages())
                 .items(items)
                 .build();
     }
