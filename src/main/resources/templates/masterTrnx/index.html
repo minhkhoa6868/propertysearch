@@ -71,6 +71,7 @@
               placeholder="e.g. 310001"
               th:value="${nPostalValue}"
             />
+            <p class="form-error" id="nPostalError"></p>
           </div>
 
           <!-- Floor Area -->
@@ -100,6 +101,7 @@
                 th:value="${flrAreaMaxValue}"
               />
             </div>
+            <p class="form-error" id="flrAreaError"></p>
           </div>
 
           <!-- Contract Date Range -->
@@ -125,6 +127,7 @@
                 th:value="${contDateToValue}"
               />
             </div>
+            <p class="form-error" id="contDateError"></p>
           </div>
 
           <!-- Submit -->
@@ -430,6 +433,7 @@
       </div>
     </div>
 
+    <script src="/js/validationUtils.js"></script>
     <script src="/js/masterTrnx.js"></script>
   </body>
 </html>

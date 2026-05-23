@@ -93,6 +93,7 @@ h1 {
 .form-group {
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .form-group label {
@@ -104,7 +105,6 @@ h1 {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 8px;
 }
 
 .label-dot {
@@ -146,6 +146,13 @@ h1 {
   outline: none;
   border-color: rgba(20, 18, 16, 0.36);
   box-shadow: 0 0 0 3px rgba(20, 18, 16, 0.07);
+}
+
+.form-error {
+  font-size: 12px;
+  color: #c93025;
+  padding-left: 5px;
+  display: none;
 }
 
 /* date inputs keep their native picker icon */

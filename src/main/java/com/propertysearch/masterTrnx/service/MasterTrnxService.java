@@ -3,11 +3,11 @@ package com.propertysearch.masterTrnx.service;
 import com.propertysearch.core.dto.PaginationRequestDto;
 import com.propertysearch.core.dto.PaginationResponseDto;
 import com.propertysearch.core.util.PaginationUtils;
+import com.propertysearch.core.util.ValidationUtils;
 import com.propertysearch.masterTrnx.domain.repository.MasterTrnxRepository;
 import com.propertysearch.masterTrnx.dto.MasterTrnxDto;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MasterTrnxService {
@@ -35,6 +34,12 @@ public class MasterTrnxService {
             nPostalObj != null
                 ? nPostalObj.toString()
                 : "";
+
+        if (ValidationUtils.isNumeric(nPostal)) {
+            nPostal = nPostal.trim();
+        } else {
+            nPostal = null;
+        }
         // floor area min and max
         Object flrAreaMinObj = request.getFilters().get("flrAreaMin");
 
