@@ -356,7 +356,7 @@ input[type="number"] {
 }
 .results-label {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 7px;
   font-size: 10px;
   font-weight: 600;
@@ -364,7 +364,8 @@ input[type="number"] {
   text-transform: uppercase;
   color: var(--muted);
 }
-.results-count {
+.results-count,
+.selected-count {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -576,7 +577,7 @@ table.grid td:last-child {
 }
 
 table.grid tbody tr.active {
-    background: rgba(20, 18, 16, 0.06) !important;
+  background: rgba(20, 18, 16, 0.06) !important;
 }
 
 /* Checkbox col */
@@ -600,41 +601,41 @@ input[type="checkbox"] {
 }
 
 .pagination {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 16px 20px;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 20px;
+  justify-content: center;
 }
 
 .page-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 32px;
-    height: 32px;
-    padding: 0 8px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 13px;
-    color: var(--fg);
-    cursor: pointer;
-    transition: background 0.15s;
-    user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--fg);
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
 }
 
 .page-btn:hover {
-    background: var(--bg);
+  background: var(--bg);
 }
 
 .page-btn.active {
-    background: var(--fg);
-    color: #fff;
-    border-color: var(--fg);
+  background: var(--fg);
+  color: #fff;
+  border-color: var(--fg);
 }
 
 .page-btn.disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-    pointer-events: none;
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
 }

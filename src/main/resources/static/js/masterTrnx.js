@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           row.classList.remove("active");
         }
+        updateSelectedCount();
       });
     });
 
@@ -36,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
           } else {
             row.classList.remove("active");
           }
+          updateSelectedCount();
         });
     });
   }
@@ -248,4 +250,10 @@ function goToPage(pageOrElement) {
   params.set("limit", limit);
   params.set("offset", (page - 1) * limit);
   window.location.href = "/?" + params.toString();
+}
+
+function updateSelectedCount() {
+    const selectedCount = document.querySelectorAll('.row-checkbox:checked').length;
+    const el = document.querySelector(".selected-count");
+    if (el) el.textContent = selectedCount;
 }
