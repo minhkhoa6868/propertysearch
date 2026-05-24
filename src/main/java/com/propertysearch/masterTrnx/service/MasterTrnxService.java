@@ -35,11 +35,13 @@ public class MasterTrnxService {
                 ? nPostalObj.toString()
                 : "";
 
-        if (ValidationUtils.isNumeric(nPostal) && nPostal.length() == 6) {
+        if (!nPostal.isEmpty()) {
+            if (!ValidationUtils.isNumeric(nPostal) || nPostal.length() != 6) {
+                throw new IllegalArgumentException("Invalid nPostal code. It should be a 6-digit number.");
+            }
             nPostal = nPostal.trim();
-        } else {
-            throw new IllegalArgumentException("Invalid nPostal code. It should be a 6-digit number.");
         }
+        
         // floor area min and max
         Object flrAreaMinObj = request.getFilters().get("flrAreaMin");
 

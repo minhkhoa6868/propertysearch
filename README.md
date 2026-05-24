@@ -48,6 +48,11 @@ mvn clean install
 mvn spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
+### 4. Run unit test
+```bash
+mvn test
+```
+
 Open your browser at **http://localhost:8080**
 
 ## Features
