@@ -35,10 +35,10 @@ public class MasterTrnxService {
                 ? nPostalObj.toString()
                 : "";
 
-        if (ValidationUtils.isNumeric(nPostal)) {
+        if (ValidationUtils.isNumeric(nPostal) && nPostal.length() == 6) {
             nPostal = nPostal.trim();
         } else {
-            nPostal = null;
+            throw new IllegalArgumentException("Invalid nPostal code. It should be a 6-digit number.");
         }
         // floor area min and max
         Object flrAreaMinObj = request.getFilters().get("flrAreaMin");
@@ -58,9 +58,18 @@ public class MasterTrnxService {
                 : "";
 
         Double flrAreaMaxValue = flrAreaMax.isEmpty() ? null : Double.valueOf(flrAreaMax);
+
+        if (flrAreaMinValue != null && flrAreaMaxValue != null && flrAreaMinValue > flrAreaMaxValue) {
+            throw new IllegalArgumentException("flrAreaMin cannot be greater than flrAreaMax.");
+        }
+
         // contract date from and to
         LocalDate contDateFrom = parseLocalDate(request.getFilters(), "contDateFrom");
         LocalDate contDateTo = parseLocalDate(request.getFilters(), "contDateTo");
+
+        if (contDateFrom != null && contDateTo != null && contDateFrom.isAfter(contDateTo)) {
+            throw new IllegalArgumentException("contDateFrom cannot be after contDateTo.");
+        }
 
         Page<MasterTrnxDto> page = masterTrnxRepository.searchByFilters(stNames, nPostal, flrAreaMinValue, flrAreaMaxValue, contDateFrom, contDateTo, pageable);
         return PaginationUtils.buildResponse(request, page, item -> item);

@@ -161,11 +161,6 @@ input[type="date"] {
   cursor: pointer;
 }
 
-/* number input hide spinners */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
 /* ── Range row ── */
 .range-row {
   display: flex;

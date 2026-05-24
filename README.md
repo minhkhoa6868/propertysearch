@@ -62,5 +62,5 @@ Open your browser at **http://localhost:8080**
 
 - **Backend:** Java 21, Spring Boot 3.5, Spring Data JPA
 - **Database:** Microsoft SQL Server
-- **Frontend:** Thymeleaf, TomSelect
+- **Frontend:** Thymeleaf, CSS, Javascript, TomSelect, jsPDF AutoTable
 - **Build:** Maven
