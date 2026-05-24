@@ -27,7 +27,7 @@ spring.datasource.password=YOUR_PASSWORD
 ### 3. Build and run
 ```bash
 mvn clean install
-mvn spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
 Open your browser at **http://localhost:8080**
