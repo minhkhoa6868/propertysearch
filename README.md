@@ -8,6 +8,24 @@ A Spring Boot MVC web application for searching Singapore private residential pr
 - Maven 3.9+
 - Microsoft SQL Server (with the MasterTrnx dataset loaded)
 
+## Environment Setup
+
+### Java
+1. Download and install Java 21 from [Oracle JDK 21](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
+2. Set `JAVA_HOME` environment variable to your JDK installation path
+3. Verify installation:
+```bash
+java -version
+```
+Expected output: `java version "21.x.x"`
+
+### Maven
+1. Download Maven from [apache.org](https://maven.apache.org/download.cgi)
+2. Verify installation:
+```bash
+mvn -version
+```
+
 ## Getting Started
 
 ### 1. Clone the repository
@@ -38,7 +56,7 @@ Open your browser at **http://localhost:8080**
 - Sort results by any column
 - Pagination with configurable page size
 - Filter state preserved in URL (shareable and bookmarkable)
-- Export CSV and PDF
+- Export selected rows to CSV and PDF
 
 ## Tech Stack
 
