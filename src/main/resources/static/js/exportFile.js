@@ -56,7 +56,7 @@ function getSelectedData() {
       }
       // if class is money, plain number with 2 decimal places
       else if (cell.classList.contains("money")) {
-        const num = parseFloat(cellText.replace(/,/g, ""));
+        const num = parseFloat(cellText.replace(/[$,]/g, ""));
         cellText = isNaN(num) ? "" : num.toFixed(2);
       }
 

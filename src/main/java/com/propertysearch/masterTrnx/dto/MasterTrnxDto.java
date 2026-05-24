@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
@@ -45,4 +46,20 @@ public class MasterTrnxDto {
     // private String planningRegion;
     private String planningArea;
     // private String postal;
+
+    public String getConsiderFormatted() {
+        return consider != null ? String.format("$%.2f", consider) : "";
+    }
+    public String getPsmFormatted() {
+        return psm != null ? String.format("$%.2f", psm) : "";
+    }
+    public String getPsfFormatted() {
+        return psf != null ? String.format("$%.2f", psf) : "";
+    }
+
+    public String getContDateFormatted() {
+        return contDate != null 
+            ? contDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) 
+            : "";
+    }
 }

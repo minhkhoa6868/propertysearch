@@ -174,18 +174,19 @@ function applyFilters() {
   const flrAreaMax = document.getElementById("flrAreaMax").value;
   const contDateFrom = document.getElementById("contDateFrom").value;
   const contDateTo = document.getElementById("contDateTo").value;
-  const sortField = document.getElementById("sortFieldInput").value;
-  const sortDirection = document.getElementById("sortDirectionInput").value;
-  const limit = document.getElementById("pageSizeSelect")?.value || "50";
 
+  // filters
   if (nPostal) params.set("nPostal", nPostal);
   if (flrAreaMin) params.set("flrAreaMin", flrAreaMin);
   if (flrAreaMax) params.set("flrAreaMax", flrAreaMax);
   if (contDateFrom) params.set("contDateFrom", contDateFrom);
   if (contDateTo) params.set("contDateTo", contDateTo);
-  if (sortField) params.set("sortField", sortField);
-  if (sortDirection) params.set("sortDirection", sortDirection);
 
+  // preserve sort and pagination when applying filters
+  if (currentParams.has("sortField"))
+    params.set("sortField", currentParams.get("sortField"));
+  if (currentParams.has("sortDirection"))
+    params.set("sortDirection", currentParams.get("sortDirection"));
   if (currentParams.has("limit"))
     params.set("limit", currentParams.get("limit"));
   if (currentParams.has("offset")) params.set("offset", "0"); // reset to first page
@@ -201,7 +202,6 @@ function clearFilters() {
     params.set("sortField", currentParams.get("sortField"));
   if (currentParams.has("sortDirection"))
     params.set("sortDirection", currentParams.get("sortDirection"));
-
   if (currentParams.has("limit"))
     params.set("limit", currentParams.get("limit"));
   if (currentParams.has("offset")) params.set("offset", "0"); // reset to first page
@@ -253,7 +253,9 @@ function goToPage(pageOrElement) {
 }
 
 function updateSelectedCount() {
-    const selectedCount = document.querySelectorAll('.row-checkbox:checked').length;
-    const el = document.querySelector(".selected-count");
-    if (el) el.textContent = selectedCount;
+  const selectedCount = document.querySelectorAll(
+    ".row-checkbox:checked",
+  ).length;
+  const el = document.querySelector(".selected-count");
+  if (el) el.textContent = selectedCount;
 }

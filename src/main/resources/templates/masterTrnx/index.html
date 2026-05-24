@@ -183,11 +183,10 @@
         <div class="results-header">
           <div class="results-label">
             <div>
-              Results: <span class="results-count" th:text="${result.total}"></span>
+              Results:
+              <span class="results-count" th:text="${result.total}"></span>
             </div>
-            <div>
-              Record(s) selected: <span class="selected-count">0</span>
-            </div>
+            <div>Record(s) selected: <span class="selected-count">0</span></div>
           </div>
 
           <div class="export-btn">
@@ -421,15 +420,11 @@
                 <td th:text="${prop.areaType}"></td>
                 <td th:text="${prop.flrArea}" class="num"></td>
                 <td th:text="${prop.flrSf}" class="num"></td>
-                <td th:text="${prop.consider}" class="num money"></td>
-                <td th:text="${prop.psm}" class="num money"></td>
-                <td th:text="${prop.psf}" class="num money"></td>
+                <td th:text="${prop.considerFormatted}" class="num money"></td>
+                <td th:text="${prop.psmFormatted}" class="num money"></td>
+                <td th:text="${prop.psfFormatted}" class="num money"></td>
                 <td th:text="${prop.saleType}"></td>
-                <td
-                  th:text="${#temporals.format(prop.contDate, 'dd/MM/yyyy')}"
-                  class="date"
-                  id="cont-date"
-                ></td>
+                <td th:text="${prop.contDateFormatted}" class="date"></td>
                 <td th:text="${prop.tenure}"></td>
                 <td th:text="${prop.completionDate}"></td>
                 <td th:text="${prop.purAddType}"></td>
