@@ -37,9 +37,9 @@ cd propertysearch
 ### 2. Configure database connection
 Create `src/main/resources/application-local.properties`:
 ```properties
-spring.datasource.url=jdbc:sqlserver://YOUR_HOST:1433;databaseName=YOUR_DB
-spring.datasource.username=YOUR_USERNAME
-spring.datasource.password=YOUR_PASSWORD
+spring.datasource.url=jdbc:sqlserver://<your_server>:1433;databaseName=<your_database_name>;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+spring.datasource.username=<your_username>
+spring.datasource.password=<your_password>
 ```
 
 ### 3. Build and run
